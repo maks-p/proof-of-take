@@ -2,22 +2,24 @@ import * as React from "react";
 import { ethers } from "ethers";
 import "./App.css";
 import abi from "./utils/proofOfTake.json";
+import TakeCard from "./components/TakeCard";
+import SubmitTake from "./components/SubmitTake";
 
 import { useState, useEffect } from "react";
 
 const App = () => {
-  const contractAddress = "0x63241aC30e1cFCe926740F96066d2505A46F7464";
+  const contractAddress = "0x3d4ED1d6a17dC0CB5A632eC44697C157f797a1c7";
   const contractABI = abi.abi;
 
   const [currentAccount, setCurrentAccount] = useState(null);
   const [message, setMessage] = useState("");
   const [contract, setContract] = useState(null);
   const [isLoading, setLoading] = useState(true);
-  const [takes, setTakes] = useState(null)
+  const [takes, setTakes] = useState(null);
 
   const checkIfWalletIsConnected = async () => {
     try {
-      // Check if we have acces to window.ethereum
+      // Check if we have access to window.ethereum
       const { ethereum } = window;
 
       if (!ethereum) {
@@ -85,7 +87,7 @@ const App = () => {
 
   const sendTake = async () => {
     try {
-      const takeTxn = await contract.create(message);
+      const takeTxn = await contract.create(message, { gasLimit: 300000 });
       const res = await takeTxn.wait();
       console.log(res);
       getUserTakes();
@@ -107,21 +109,13 @@ const App = () => {
             timestamp: new Date(parseInt(take[1]._hex, 16) * 1000),
           });
         }
+      } else {
+        console.log("No contract found yet");
       }
       setTakes(takesArr);
     } catch (err) {
-      console.log(err);
+      console.log("getUserTakes Error: ", err);
     }
-  };
-
-  const TakesCard = ({ take }) => {
-    const { text, timestamp } = take;
-    return (
-      <div className="takesCard">
-        <h3>{text}</h3>
-        <div>{timestamp.toLocaleString()}</div>
-      </div>
-    );
   };
 
   const takesContainer = (
@@ -133,7 +127,7 @@ const App = () => {
           <h2>My Takes</h2>
           {takes.map((take, takeIdx) => (
             <div key={takeIdx}>
-              <TakesCard take={take} />
+              <TakeCard take={take} />
             </div>
           ))}
         </div>
@@ -143,16 +137,16 @@ const App = () => {
 
   useEffect(() => {
     checkIfWalletIsConnected();
-    getContract();
   }, []);
 
   useEffect(() => {
+    getContract();
     getUserTakes();
   }, [currentAccount]);
 
   useEffect(() => {
-    setLoading(false)
-  }, [takes])
+    setLoading(false);
+  }, [takes]);
 
   const onChange = (e) => {
     setMessage(e.target.value);
@@ -179,20 +173,7 @@ const App = () => {
         <div className="bio">
           Preserve your hottest takes on the freshest immutable blockchain
         </div>
-        <form onSubmit={onSubmit} className="form">
-          <input
-            type="text"
-            className="input"
-            name="take"
-            placeholder="your hottest take"
-            onChange={onChange}
-            value={message}
-            autoComplete="off"
-          />
-          <button type="submit" className="btn">
-            Send Take
-          </button>
-        </form>
+        <SubmitTake onSubmit={onSubmit} onChange={onChange} message={message} />
         <div>{takesContainer}</div>
       </div>
     </div>

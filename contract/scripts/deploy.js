@@ -1,15 +1,12 @@
 const main = async () => {
-    const [deployer] = await hre.ethers.getSigners();
-    const accountBalance = await deployer.getBalance();
+    const contractFactory = await hre.ethers.getContractFactory('ProofOfTake');
+    const contract = await contractFactory.deploy({
+      value: hre.ethers.utils.parseEther('0.001'),
+    });
   
-    console.log('Deploying contracts with account: ', deployer.address);
-    console.log('Account balance: ', accountBalance.toString());
+    await contract.deployed();
   
-    const Token = await hre.ethers.getContractFactory('ProofOfTake');
-    const portal = await Token.deploy();
-    await portal.deployed();
-  
-    console.log('ProofOfTake address: ', portal.address);
+    console.log('Contract address: ', contract.address);
   };
   
   const runMain = async () => {

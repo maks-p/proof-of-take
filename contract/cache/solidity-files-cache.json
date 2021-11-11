@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/0xmaks/Dev/web3/buildspace/proof-of-take/contract/contracts/ProofOfTake.sol": {
-      "lastModificationDate": 1636579537400,
-      "contentHash": "ade55f9d21a681ebb6d7d37cd4ea2cda",
+      "lastModificationDate": 1636635823429,
+      "contentHash": "2d1674f9cacc2fc75a9c7e917d659485",
       "sourceName": "contracts/ProofOfTake.sol",
       "solcConfig": {
         "version": "0.8.4",
