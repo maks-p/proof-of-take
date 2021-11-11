@@ -14,9 +14,9 @@ const inputStyle = css`
   text-align: left;
   padding: 3px;
   width: 90%;
-  max-width: 420px;
-  height: 6vh;
-  max-height: 45px;
+  max-width: 600px;
+  height: 9vh;
+  max-height: 100px;
   border: solid 1px black;
   border-radius: 5px;
   margin-top: 1vh;
@@ -31,7 +31,7 @@ const SubmitTake = ({ onSubmit, onChange, message }) => {
         css={inputStyle}
         type="text"
         name="text"
-        placeholder="your hottest take"
+        placeholder="your hottest take (280 characters max)"
         onChange={onChange}
         value={message}
         autoComplete="off"

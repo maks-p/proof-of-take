@@ -4,10 +4,10 @@ pragma solidity ^0.8.0;
 
 contract ProofOfTake {
     // Seed for random number generation
-    uint256 private seed;
+    // uint256 private seed;
 
     constructor() payable {
-        seed = (block.timestamp + block.difficulty) % 100;
+        // seed = (block.timestamp + block.difficulty) % 100;
     }
 
     // Take object
@@ -87,20 +87,20 @@ contract ProofOfTake {
             PRIZE COMPONENT
         */
         // Generate random number for next user that sends a wave as a seed
-        seed = (block.difficulty + block.timestamp + seed) % 100;
+        // seed = (block.difficulty + block.timestamp + seed) % 100;
 
-        if (seed <= 50) {
-            uint256 prizeAmount = 0.00001 ether;
-            require(
-                prizeAmount <= address(this).balance,
-                "Trying to withdraw more than this contract has"
-            );
+        // if (seed <= 50) {
+        //     uint256 prizeAmount = 0.00001 ether;
+        //     require(
+        //         prizeAmount <= address(this).balance,
+        //         "Trying to withdraw more than this contract has"
+        //     );
 
-            (bool success, ) = (msg.sender).call{value: prizeAmount}("");
-            require(success, "Failed to withdraw eth from contract");
+        //     (bool success, ) = (msg.sender).call{value: prizeAmount}("");
+        //     require(success, "Failed to withdraw eth from contract");
 
-            emit WinPrize(msg.sender, block.timestamp, prizeAmount);
-        }
+        //     emit WinPrize(msg.sender, block.timestamp, prizeAmount);
+        // }
     }
 
     // Get a User's single take using index

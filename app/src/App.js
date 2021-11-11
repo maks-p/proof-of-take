@@ -8,7 +8,7 @@ import SubmitTake from "./components/SubmitTake";
 import { useState, useEffect } from "react";
 
 const App = () => {
-  const contractAddress = "0x3d4ED1d6a17dC0CB5A632eC44697C157f797a1c7";
+  const contractAddress = "0xA08B28f4870d40B9A17A78fA059CDE9a7c6A4234";
   const contractABI = abi.abi;
 
   const [currentAccount, setCurrentAccount] = useState(null);
@@ -113,6 +113,7 @@ const App = () => {
         console.log("No contract found yet");
       }
       setTakes(takesArr);
+      setMessage("");
     } catch (err) {
       console.log("getUserTakes Error: ", err);
     }
